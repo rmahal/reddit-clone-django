@@ -1,0 +1,35 @@
+{% extends "reddit/base.html" %}
+{% block content %}
+<div class="container">
+  <div class="jumbotron">
+    <h1>Welcome to the Djungle !</h1>
+    {% if user.is_authenticated %}
+        <h2>Hello {{ user.username }}</h2>
+    {% else %}
+        <h2>Register or Login if you'd like to</h2>
+    {% endif %}
+    <form enctype="multipart/form-data" method="POST">
+      {% csrf_token %}
+      {{ post_form.as_p }}
+      <input type="submit" name="" value="Register">
+    </form>
+    <br>
+    <hr>
+    <br>
+    <h3>Posts</h3>
+    {% for post in posts %}
+    <div class="card">
+      <a href="/">
+      <p>{{ post.vote_total }}</p>
+      <p>{{ post.id }}</p>
+      <h4><b>{{ post.title }}</b></h4>
+      <img src="/media/{{ post.picture }}" alt="Avatar" style="width:100%">
+      <div class="container"> 
+        <p>{{ post.content }}</p> 
+      </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
